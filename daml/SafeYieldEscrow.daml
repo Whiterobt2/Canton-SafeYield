@@ -1,0 +1,32 @@
+module SafeYieldEscrow where
+
+import Types
+import RiskOracleAttestation
+
+template EscrowDeposit
+  with
+    user    : Party
+    vault   : Party
+    amount  : Decimal
+  where
+    signatory user, vault
+
+    controller vault can
+      ReceiveAttestation : ContractId StrategyPosition
+        with
+          att : RiskStatus
+        do
+          case att of
+            Approved ->
+              create StrategyPosition with user; vault; amount
+            Violation ->
+              archive self
+
+template StrategyPosition
+  with
+    user   : Party
+    vault  : Party
+    amount : Decimal
+  where
+    signatory vault
+    observer user

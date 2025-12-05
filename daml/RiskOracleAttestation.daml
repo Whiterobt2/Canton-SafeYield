@@ -1,0 +1,13 @@
+module RiskOracleAttestation where
+
+import Types
+
+template RiskAttestation
+  with
+    oracle : Party
+    vault  : Party
+    status : RiskStatus
+    policy : RiskPolicy
+  where
+    signatory oracle
+    observer vault

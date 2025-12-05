@@ -1,0 +1,20 @@
+module SafeYieldStrategy where
+
+import Types
+
+template YieldCycle
+  with
+    vault     : Party
+    user      : Party
+    principal : Decimal
+    premium   : Decimal
+  where
+    signatory vault
+    observer user
+
+    controller vault can
+      DistributeYield : ContractId YieldCycle
+        with
+          newPremium : Decimal
+        do
+          create this with premium = premium + newPremium

@@ -1,0 +1,13 @@
+module Types where
+
+import Daml.Script
+
+data RiskStatus = Approved | Violation
+  deriving (Eq, Show)
+
+data RiskPolicy = RiskPolicy
+  with
+    maxDrawdown : Decimal
+    deltaLimit  : Decimal
+    hedgingRequired : Bool
+  deriving (Eq, Show)

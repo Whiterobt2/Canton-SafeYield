@@ -1,0 +1,25 @@
+module TestScript where
+
+import Daml.Script
+import Types
+import SafeYieldEscrow
+import RiskOracleAttestation
+
+test = script do
+  user <- allocateParty "User"
+  vault <- allocateParty "Vault"
+  oracle <- allocateParty "Oracle"
+
+  -- Create escrow deposit
+  escrowCid <- submit user do
+    createCmd EscrowDeposit with
+      user; vault; amount = 100.0
+
+  -- Oracle attestation (approved)
+  att <- pure Approved
+
+  -- Vault processes attestation
+  stratCid <- submit vault do
+    exerciseCmd escrowCid (ReceiveAttestation att)
+
+  pure ()
