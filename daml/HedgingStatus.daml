@@ -1,0 +1,33 @@
+module HedgingStatus where
+
+import Types
+
+data HedgeState
+  = HedgeInactive
+  | HedgePending
+  | HedgeActive
+  | HedgeError Text
+  deriving (Eq, Show)
+
+template HedgePosition
+  with
+    vault        : Party
+    user         : Party
+    notional     : Decimal
+    currentDelta : Decimal
+    targetDelta  : Decimal
+    state        : HedgeState
+  where
+    signatory vault
+    observer user
+
+    controller vault can
+      Rebalance : ContractId HedgePosition
+        with
+          newDelta : Decimal
+        do
+          let newState =
+                if newDelta == targetDelta
+                then HedgeActive
+                else HedgePending
+          create this with currentDelta = newDelta; state = newState

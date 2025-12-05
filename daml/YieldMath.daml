@@ -1,0 +1,21 @@
+module YieldMath where
+
+import Types
+
+-- Very simplified placeholder functions
+-- In a real implementation this would depend on IV, maturity, and strike.
+
+-- Premium as a simple function of notional and volatility factor
+premiumEstimate : Decimal -> Decimal -> Decimal
+premiumEstimate notional volFactor =
+  notional * volFactor
+
+-- Maximum theoretical loss on a fully collateralized short option position
+maxTheoreticalLoss : Decimal -> Decimal
+maxTheoreticalLoss notional =
+  notional
+
+-- Simple check if drawdown is within policy
+withinDrawdown : Decimal -> RiskPolicy -> Bool
+withinDrawdown realizedDrawdown policy =
+  realizedDrawdown <= policy.maxDrawdown

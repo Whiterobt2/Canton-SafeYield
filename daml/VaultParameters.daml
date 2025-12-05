@@ -1,0 +1,16 @@
+module VaultParameters where
+
+import Types
+
+template VaultParameters
+  with
+    vault        : Party
+    baseAsset    : Text
+    quoteAsset   : Text
+    riskPolicy   : RiskPolicy
+    targetApy    : Decimal
+  where
+    signatory vault
+
+    key (vault, baseAsset, quoteAsset) : (Party, Text, Text)
+    maintainer key._1
