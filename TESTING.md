@@ -9,7 +9,7 @@ Testing consists of three components:
 
 ## 1. Prototype Testing (UI Flow)
 
-1. Open the Figma prototype link provided in `prototype-link.txt`.
+1. Open the Figma prototype link 
 2. Click through the flow:
    - Deposit input screen
    - Escrow protection state
